@@ -23,9 +23,12 @@ class MqttClient {
     bool Publish(const char *topic, const char *value, bool retained);
 
     bool IsConnected();
+    bool IsReconnected();
 
  private:
     const uint16_t kDelayForReconnectMQTT_ = 5 * 1000;  // 5 sec
+
+    const uint8_t kSessionIdHashSize = 15;
 
     bool need_reconnect_ = false;
     bool mqtt_reconnected_ = false;

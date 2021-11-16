@@ -1,11 +1,8 @@
-#include "mqtt_сlient.h"
+#include "mqtt_client.h"
 
 #include "utils.h"
 
-MqttClient::MqttClient() {
-    CreateClient();
-    session_id_.append(RandomString(millis(), 8));
-}
+MqttClient::MqttClient() { CreateClient(); }
 
 void MqttClient::CreateClient() {
     this->wifi_client_ = new WiFiClient;
@@ -21,6 +18,7 @@ bool MqttClient::Init(String username, String host, uint16_t port, String passwo
 
     client_->setServer(this->host_, this->port_);
     client_->setCallback(callback);
+    session_id_.append(RandomString(millis(), kSessionIdHashSize));
     return (this->Reconnect());
 }
 
@@ -66,3 +64,11 @@ void MqttClient::MqttLoop() {
 }
 
 bool MqttClient::IsConnected() { return client_->connected(); }
+
+bool MqttClient::IsReconnected() {
+    if (mqtt_reconnected_) {
+        mqtt_reconnected_ = false;
+        return true;
+    }
+    return false;
+}
