@@ -5,12 +5,13 @@
 #include "sha256.h"
 std::string RandomString(uint8_t seed, uint8_t length) {
     srand(seed);
-    const char* letters[40] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
-                               "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
-                               "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+    const char* letters[62] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+                               "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6",
+                               "7", "8", "9", "0", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+                               "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     std::string randString = "";
-    for (uint8_t i = 0; i < length; i++) {
-        randString.append(letters[rand() % 10]);
+    for (int i = 0; i < length; i++) {
+        randString.append(letters[rand() % 61]);
     }
     return randString;
 }
@@ -36,11 +37,8 @@ String Sha_256(String data) {
     sha256Instance->update(text, strlen((const char*)text));
     sha256Instance->final(hash);
 
-    for (int i = 0; i < SHA256_BLOCK_SIZE; ++i) {
-        // cppcheck-suppress sizeofCalculation
-        snprintf(texthash + 2 * i, sizeof(texthash + 2 * i), "%02x", hash[i]);
-        Serial.println(texthash + 2 * i);
-    }
+    // cppcheck-suppress sizeofCalculation
+    for (int i = 0; i < SHA256_BLOCK_SIZE; ++i) snprintf(texthash + 2 * i, sizeof(texthash + 2 * i), "%02x", hash[i]);
     Serial.println(texthash);
 
     delete sha256Instance;

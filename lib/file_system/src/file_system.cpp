@@ -56,8 +56,6 @@ bool EraseFlash() {
     return false;
 }
 
-
-
 bool WriteSettings(const char *file_path, uint8_t *data, size_t size_of_data) {
     File configFile = LittleFS.open(file_path, "w");
     if (!configFile) {

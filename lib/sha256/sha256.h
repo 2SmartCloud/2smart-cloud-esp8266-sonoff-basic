@@ -10,7 +10,7 @@
 
 /*************************** HEADER FILES ***************************/
 #include <stddef.h>
-#include <stdlib.h>
+#include <stdint.h>
 
 /****************************** MACROS ******************************/
 #define SHA256_BLOCK_SIZE 32  // SHA256 outputs a 32 byte digest
