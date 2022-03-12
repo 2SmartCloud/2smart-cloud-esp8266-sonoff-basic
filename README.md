@@ -18,21 +18,50 @@ After installing the firmware on the device, you need to install the mobile appl
 
 ## How to write firmware on device
 
-1. Need have:  
-     `python` (>= v3) installed. You can control it in terminal      
+Have connected device to your computer with USB-TTL converter.
+
+![image](04.jpg)
+
+### Using Docker (Linux only)
+1. Download our bash script:
+    ```
+    curl https://raw.githubusercontent.com/2SmartCloud/2smart-cloud-cpp-sdk/master/utils/bin/firmware_install.sh > firmware_install.sh
+    ```
+
+2. Make script executable:
+    ```
+    chmod +x firmware_install.sh
+    ```
+3. Have connected device to your computer.
+
+4. Build and write the firmware
+    ```
+    ./firmware_install.sh write -d <PORT>
+    ```
+    or update existing firmware
+    ```
+    ./firmware_install.sh upload -d <PORT>
+    ```
+    full list of commands
+    ```
+    ./firmware_install.sh
+    ```
+
+5. If everything is okay it should start in AP mode and blink once in a second.
+
+### Using installed requirements
+1. Need have:
+    `python` (>= v3) installed. You can control it in terminal
     ```
     python --version
-    ```    
+    ```
 
     `platformio` (>= v5.1.1)
     ```
     pip install -U platformio
-    ```    
+    ```
 
 2. Have connected device to your computer.
-
-![image](04.jpg)
-
 
 3. Device should be listed in /dev as one of this:
 
@@ -48,26 +77,25 @@ After installing the firmware on the device, you need to install the mobile appl
 4. build and write
 
     ```
+    pio run -t uploadfs
     pio run -t upload
+    ```
+
+    or just build
+    ```
+    pio run
     ```
 
 5. If everything is okay it should start in AP mode and blink once in a second.
 
-If you want just build 
-    ```
-    pio run 
-    ```
 If you have error "can't open device "/dev/ttyUSB0": Permission denied" follow Link https://qna.habr.com/q/526674
 
 CLI guide https://docs.platformio.org/en/latest/core/userguide/index.html
 
 ## Factory reset
-To reset connected device press the power button for 10 seconds until led starts blinking.
+To reset connected device press the power button for 10 seconds until led starts blynking. 
 
 ## Custom firmware
 
-Feel free to fork this firmware and create you own products with custom functionality.
+Fill free to fork this firmware and create you own products with custom functionality.
 Detailed instruction you could find in our [blog](https://2smart.com/blog/tpost/ebvsii6y21-how-to-write-firmware-for-an-iot-device).
-
-
-
